@@ -1,0 +1,7 @@
+[
+  "SLACK_TOKEN",
+  "IMAP_USERNAME",
+  "IMAP_PASSWORD",
+  "IMAP_PORT",
+  "IMAP_SERVER"
+]

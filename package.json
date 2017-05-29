@@ -1,0 +1,21 @@
+{
+  "name": "email-slack-bot",
+  "version": "1.0.0",
+  "description": "A Slack bot that relays incoming emails from an SMTP inbox to Slack channels",
+  "main": "app.js",
+  "repository": "https://github.com/TimonLukas/email-slack-bot.git",
+  "author": "Timon Lukas <timon.lukas3@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@slack/client": "^3.10.0",
+    "axios": "^0.16.1",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.3",
+    "form-data": "^2.1.4",
+    "imap": "^0.8.19",
+    "mailparser": "^2.0.5",
+    "node-slack-upload": "^1.2.1",
+    "striptags": "^3.0.1",
+    "to-markdown": "^3.0.4"
+  }
+}
