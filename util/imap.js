@@ -1,27 +1,4 @@
-const toMarkdown = require('to-markdown');
-const stripTags = require('striptags');
 const fs = require('fs');
-
-const areAllEnvironmentVariablesSet = () => {
-  const variables = require('./requiredEnvironmentVariables.json');
-  let areAllThere = true;
-  variables.forEach(variable => {
-    if (typeof process.env[variable] === 'undefined') {
-      areAllThere = false;
-    }
-  });
-
-  return areAllThere;
-};
-
-const markdownify = (html) => {
-  const parsed = toMarkdown(html);
-
-  // There is a zero-width space in front of the "join" thingys!
-  const bReplaced = parsed.split('**').join('​*​');
-  const iReplaced = bReplaced.split('_').join('​_​');
-  return stripTags(iReplaced);
-};
 
 const openInbox = (imap, callback) => {
   imap.openBox('INBOX', false, (error, box) => {
@@ -113,8 +90,6 @@ const getAttachmentsFromMail = (mailAttachments, client, callback) => {
 };
 
 module.exports = {
-  areAllEnvironmentVariablesSet,
-  markdownify,
   openInbox,
   fetchUnseenEmails,
   getAttachmentsFromMail

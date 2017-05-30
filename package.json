@@ -14,5 +14,14 @@
     "mailparser": "^2.0.5",
     "striptags": "^3.0.1",
     "to-markdown": "^3.0.4"
+  },
+  "devDependencies": {
+    "chai": "^4.0.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.4.2"
+  },
+  "scripts": {
+    "test": "mocha",
+    "cover": "istanbul cover node_modules/mocha/bin/_mocha"
   }
 }

@@ -5,14 +5,15 @@ const WebClient = require('@slack/client').WebClient;
 const Imap = require('imap');
 const fs = require('fs');
 const SimpleParser = require('mailparser').simpleParser;
-const util = require('./util');
+const util = require('./util/util');
+const imapUtil = require('./util/imap');
 
 if (!util.areAllEnvironmentVariablesSet()) {
   throw 'Not all required environment variables are set!';
 }
 
-if(!fs.existsSync("tmp")) {
-  fs.mkdirSync("tmp");
+if (!fs.existsSync('tmp')) {
+  fs.mkdirSync('tmp');
 }
 
 const markEmailsAsRead = process.env.DEBUG !== 'true';
@@ -32,17 +33,17 @@ const app = express();
 console.log(`Marking emails as read: ${markEmailsAsRead}`);
 
 app.get('/', (request, response) => {
-  util.openInbox(imap, () => {
-    util.fetchUnseenEmails(imap, markEmailsAsRead, (mails) => {
-      if(mails.length === 0) {
-        response.end("No new mails!");
+  imapUtil.openInbox(imap, () => {
+    imapUtil.fetchUnseenEmails(imap, markEmailsAsRead, (mails) => {
+      if (mails.length === 0) {
+        response.end('No new mails!');
         return;
       }
 
       mails.forEach(mail => {
         SimpleParser(mail).then(mail => {
           const address = mail.to.value[0].address;
-          const channel = address.split('@')[0].split('+')[1];
+          const channel = util.extractChannelFromAddress(address);
 
           const sendMessage = (attachmentsString) => {
             const subject = mail.subject;
@@ -61,11 +62,11 @@ app.get('/', (request, response) => {
           };
 
           if (mail.attachments.length > 0) {
-            util.getAttachmentsFromMail(mail.attachments, client, (attachments) => {
+            imapUtil.getAttachmentsFromMail(mail.attachments, client, (attachments) => {
               const attachmentList = attachments.map(attachment => {
-                  return `<${attachment.link}|${attachment.name}>`;
+                return `<${attachment.link}|${attachment.name}>`;
               });
-              const attachmentString = `\n\nAttachments: \n• ${attachmentList.join("\n• ")}`;
+              const attachmentString = `\n\nAttachments: \n• ${attachmentList.join('\n• ')}`;
               sendMessage(attachmentString);
             });
           } else {
