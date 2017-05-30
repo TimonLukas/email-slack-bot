@@ -4,7 +4,6 @@ const express = require('express');
 const WebClient = require('@slack/client').WebClient;
 const Imap = require('imap');
 const fs = require('fs');
-const Uploader = require('node-slack-upload');
 const SimpleParser = require('mailparser').simpleParser;
 const util = require('./util');
 
@@ -27,7 +26,6 @@ const imapOptions = {
 };
 
 const client = new WebClient(process.env.SLACK_TOKEN);
-const upload = new Uploader(process.env.SLACK_TOKEN);
 const imap = new Imap(imapOptions);
 const app = express();
 
