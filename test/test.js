@@ -31,16 +31,6 @@ describe('util', () => {
     });
   });
 
-  describe('#markdownify', () => {
-    it('should correctly replace tokens in markdown tags', done => {
-      util.markdownify('**test**').should.be.equal('​*​test​*​');
-      util.markdownify('_test_').should.be.equal('​_​test​_​');
-      util.markdownify('**_test_**').should.be.equal('​*​​_​test​_​​*​');
-      util.markdownify('**test**_test_').should.be.equal('​*​test​*​​_​test​_​');
-      done();
-    });
-  });
-
   describe('#areAllEnvironmentVariablesSet', () => {
     it('should return true if everything needed is declared', done => {
       util.areAllEnvironmentVariablesSet({
