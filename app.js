@@ -8,7 +8,9 @@ const SimpleParser = require('mailparser').simpleParser;
 const util = require('./util/util');
 const imapUtil = require('./util/imap');
 
-if (!util.areAllEnvironmentVariablesSet()) {
+const variables = require('./util/requiredEnvironmentVariables.json');
+
+if (!util.areAllEnvironmentVariablesSet(process.env, variables)) {
   throw 'Not all required environment variables are set!';
 }
 

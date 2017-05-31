@@ -1,11 +1,10 @@
 const toMarkdown = require('to-markdown');
 const stripTags = require('striptags');
 
-const areAllEnvironmentVariablesSet = () => {
-  const variables = require('./requiredEnvironmentVariables.json');
+const areAllEnvironmentVariablesSet = (environment, variables) => {
   let areAllThere = true;
   variables.forEach(variable => {
-    if (typeof process.env[variable] === 'undefined') {
+    if (typeof environment[variable] === 'undefined') {
       areAllThere = false;
     }
   });
@@ -31,13 +30,13 @@ const filterEmptyParts = (part) => {
 const extractChannelFromAddress = (address) => {
   const emailParts = address.split('@').filter(filterEmptyParts);
   if (emailParts.length !== 2) {
-    throw `An email address must have data before and after the @, and only have one @!. Provided: ${address}`;
+    throw new Error(`An email address must have data before and after the @, and only have one @!. Provided: ${address}`);
   }
 
   const channelPart = emailParts[0];
   const channelParts = channelPart.split('+').filter(filterEmptyParts);
   if (channelParts.length < 2) {
-    throw `An email must have a plus sign with a channel name coming after it. Provided: ${address}`;
+    throw new Error(`An email must have a plus sign with a channel name coming after it. Provided: ${address}`);
   }
 
   return channelParts.slice(1).join('+');
