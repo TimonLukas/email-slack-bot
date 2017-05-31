@@ -18,7 +18,8 @@ const markdownify = (html) => {
   // There is a zero-width space in front of the "join" thingys!
   const bReplaced = parsed.split('**').join('​*​');
   const iReplaced = bReplaced.split('_').join('​_​');
-  return stripTags(iReplaced);
+  const imagesReplaced = iReplaced.replace(/\(data:image[\s\S]*?\)/, '');
+  return stripTags(imagesReplaced);
 };
 
 const filterEmptyParts = (part) => {
