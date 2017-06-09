@@ -44,6 +44,12 @@ app.get('/', (request, response) => {
 
       mails.forEach(mail => {
         SimpleParser(mail).then(mail => {
+          let address = "";
+          mail.to.value.forEach(add => {
+            if(add.indexOf("dhbw") === 0) {
+              address = add;
+            }
+          });
           const address = mail.to.value[0].address;
           const channel = util.extractChannelFromAddress(address);
 
