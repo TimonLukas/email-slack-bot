@@ -50,7 +50,6 @@ app.get('/', (request, response) => {
               address = add;
             }
           });
-          const address = mail.to.value[0].address;
           const channel = util.extractChannelFromAddress(address);
 
           const sendMessage = (attachmentsString) => {
